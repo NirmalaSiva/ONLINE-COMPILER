@@ -9,8 +9,12 @@ if(!fs.existsSync(dirCodes)){
 }
 
 const generateFile = async (format, content)=>{
-  const jobId = uuid();
+  const jobId = "A"+uuid().replaceAll('-',"");
   const filename = `${jobId}.${format}`
+  if (format == 'java'){
+
+    content = content.replace("class Main",`class ${jobId}`)
+  }
   const filepath = path.join(dirCodes, filename);
   await fs.writeFileSync(filepath, content);
   return filepath;
